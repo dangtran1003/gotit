@@ -1,0 +1,8 @@
+*.pyc
+bin/
+include/
+lib/python2.7/
+local/
+venv/
+.idea/
+lib/
