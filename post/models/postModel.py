@@ -19,20 +19,21 @@ class postModel():
         if info['data']['status'] != 1:  # 1 :active
             return ERROR
         else:
-            check_title = dbModel.query_one("SELECT title FROM post WHERE post_by ='" + info['data']['email'] + "'")
+            check_title = dbModel.query_one("SELECT title FROM post WHERE post_by ='" + info['data']['email'] + "' AND title ='"+title+"'")
+            print check_title
             if check_title['data'] != None:
                 return ERROR
             else:
                 info_insert = dbModel.insert(
                     "INSERT INTO post (title,main,post_by,count_liked,note) VALUE ('%s','%s','%s','%d','%s')" % (
                         title, main, info['data']['email'], 0, main[0:90]))
-                return info_insert['success']
+                return SUCCESS
 
     # index
     @classmethod
     def list_post_all(cls):
         info = dbModel.query_all(
-            "SELECT post.id_post as id, post.post_by as post_by, post.title as title, post.note as note, post.count_liked as count_liked,GROUP_CONCAT(post_liked.email) as email FROM post LEFT JOIN post_liked ON post_liked.id_post = post.id_post LIMIT 2")
+            "SELECT post.id_post as id, post.post_by as post_by, post.title as title, post.note as note, post.count_liked as count_liked,SUBSTRING_INDEX(GROUP_CONCAT(post_liked.email SEPARATOR ','), ',',2) as email FROM post LEFT JOIN post_liked ON post.id_post = post_liked.id_post GROUP BY post.id_post")
             #     "SELECT post.id_post as id, post.post_by as post_by, post.title as title, post.note as note, post.count_liked as count_liked,(SELECT post_liked.email FROM post_liked WHERE post_liked.id_post = post.id_post LIMIT 2) as email FROM post")
 
         if info['success']:

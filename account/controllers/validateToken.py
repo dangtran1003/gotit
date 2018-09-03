@@ -13,7 +13,7 @@ class validateToken:
         if flag == 0:
             info = json.loads(helperModel._request("GET", "graph.facebook.com", "/me?access_token=" + token))
             if "id" in info:
-                print info
+                # print info
                 userid = info['id']
             else:
                 return None
