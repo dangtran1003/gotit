@@ -43,7 +43,7 @@ class postModel():
     @classmethod
     def list_post_user(cls, data):
         email = data['email']
-        data = dbModel.query_one("SELECT id_post,title,note,count_liked FROM post WHERE post_by='" + email + "'")
+        data = dbModel.query_all("SELECT id_post,title,note,count_liked FROM post WHERE post_by='" + email + "'")
         if data['success']:
             return data['data']
 

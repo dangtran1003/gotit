@@ -4,6 +4,7 @@ from models.dbModel import dbModel
 
 
 class accountModel():
+    #dang ky
     @classmethod
     def register(cls, data):
         user_id = None
@@ -33,7 +34,7 @@ class accountModel():
                     email, str(user_id), 0, str(flag)))
             if (info['success']):
                 return SUCCESS
-
+#them tk google or facebook vao email da ton tai
     @classmethod
     def update_id(cls, data):
         email = data['email']
@@ -56,7 +57,7 @@ class accountModel():
             if info['success']:
                 return SUCCESS
         return 0
-
+    #cap nhat thong tin tai khoan
     @classmethod
     def update_info(cls, data):
         access_token = data['access_token']
@@ -85,7 +86,7 @@ class accountModel():
                     "UPDATE account SET name='" + info_1 + "',labor='" + info_2 + "',status=1 WHERE google_id='" + user_id + "'")
             if info['success']:
                 return SUCCESS
-
+    #dang nhap
     @classmethod
     def login(cls, data):
         access_token = data['access_token']
